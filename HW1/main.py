@@ -35,38 +35,46 @@ def checkArgs(args):
 
 
 
-def getAbsError(pn,pn1):
-	return 1
+def checkAbsoluteError(pn,pn_1,e):
+	return abs(pn-pn_1)<e
 
-def getRelativeError(pn,pn1):
-	return 1
+def checkRelativeError(pn,pn_1,e):
+	return (abs(pn-pn_1)/abs(pn))<e
 
-def bisection(func,a,b,e,errorFunc):
+
+
+def bisection(step,func,a,b,e,stopCriteria,pn_1):
+
+	print("Step:",step,end=" ")
 
 	fa = func(a)
 	fb = func(b)
 
-	print("A:","{0:.6f}".format(a)," B:","{0:.6f}".format(b),sep="",end=" ")
-	print("fa:", "{0:.6f}".format(fa), " fb:", "{0:.6f}".format(fb), sep="", end=" ")
+	print("A:",format(a,"0.7f")," B:",format(b,"0.7f"),sep="",end=" ")
+	print("fa:", format(fa,"0.7f"), " fb:", format(fb,"0.7f"), sep="", end=" ")
 
 	if fa*fb > 0:
 		return False
 
 	pn = (a+b)/2.0
 
-	print("pn:","{0:.6f}".format(pn),sep="",end=" ")
+	print("pn:",format(pn,"0.7f"),sep="",end=" ")
 
 	fpn = func(pn)
 
-	print("f(pn):","{0:.6f}".format(fpn),sep="",end="\n")
+	print("f(pn):",format(fpn,"0.7f"),sep="",end="\n")
 
 
-	if fpn ==0:
+	if stopCriteria == "ABSOLUTE_ERROR" and checkAbsoluteError(pn,pn_1,e):
+		return pn
+	elif stopCriteria =="RELATIVE_ERROR" and checkRelativeError(pn,pn_1,e):
+		return pn
+	elif stopCriteria == "DISTANCE_ERROR" and (fpn<e):
 		return pn
 
 	if (fpn<0 and fa<0 ) or (fpn>0 and fa>0):
-		return bisection(func,pn,b,e,errorFunc)
-	else: return bisection(func,a,pn,e,errorFunc)
+		return bisection(step+1,func,pn,b,e,stopCriteria,pn)
+	else: return bisection(step+1,func,a,pn,e,stopCriteria,pn)
 
 
 def main(args):
@@ -74,10 +82,9 @@ def main(args):
 	if checkArgs(args) == False:
 		print("Please check arguments")
 
-
 	"""print(fx_test1(1))"""
 
-	bisection(fx_test1,1,2,0,2)
+	bisection(1,fx_test1,1,2,args[3],args[2],0)
 
 
 
