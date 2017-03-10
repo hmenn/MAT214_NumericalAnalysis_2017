@@ -5,8 +5,17 @@ import sys,math
 def fx_test1(x):
 	return math.pow(x,3)+4*pow(x,2)-10
 
-def fx_test2(x):
-	return x
+def fx_6_a(x):
+	return 3*x - pow(math.e,x);
+
+def fx_6_b(x):
+	return 2*x+3*math.cos(x)-pow(math.e,x);
+
+def fx_6_c(x):
+	return x*x - 4*x +4 -math.log(x,math.e);
+
+def fx_6_d(x):
+	return x+1-2*math.sin(math.pi*x);
 
 def checkArgs(args):
 	try:
@@ -35,41 +44,46 @@ def checkArgs(args):
 
 
 
-def checkAbsoluteError(pn,pn_1,e):
-	return abs(pn-pn_1)<e
+def calcAbsErr(pn,pn_1):
+	return abs(pn-pn_1)
 
-def checkRelativeError(pn,pn_1,e):
-	return (abs(pn-pn_1)/abs(pn))<e
+def calcRelErr(pn,pn_1):
+	return (abs(pn-pn_1)/abs(pn))
 
 
 
 def bisection(step,func,a,b,e,stopCriteria,pn_1):
 
-	print("Step:",step,end=" ")
+	if step==101:
+		return None
+	print("Step:",format(step,"3d"),end=" ")
 
 	fa = func(a)
 	fb = func(b)
 
-	print("A:",format(a,"0.7f")," B:",format(b,"0.7f"),sep="",end=" ")
-	print("fa:", format(fa,"0.7f"), " fb:", format(fb,"0.7f"), sep="", end=" ")
+	#print("A:",format(a,"0.7f")," B:",format(b,"0.7f"),sep="",end=" ")
+	#print("fa:", format(fa,"0.7f"), " fb:", format(fb,"0.7f"), sep="", end=" ")
 
 	if fa*fb > 0:
-		return False
+		print("f(a) and f(b) must have different signs")
+		return None
 
 	pn = (a+b)/2.0
-
-	print("pn:",format(pn,"0.7f"),sep="",end=" ")
-
 	fpn = func(pn)
 
-	print("f(pn):",format(fpn,"0.7f"),sep="",end="\n")
+	#print("pn:",format(pn,"0.7f"),"f(pn):",format(fpn,"0.7f"),sep=" ",end=" ")
+
+	absError = calcAbsErr(pn,pn_1)
+	relError = calcRelErr(pn,pn_1)
+
+	print("Absolute Error:",format(absError,"0.7f"),"Relative Error:",format(relError,"0.7f"),"E:",e,end="\n")
 
 
-	if stopCriteria == "ABSOLUTE_ERROR" and checkAbsoluteError(pn,pn_1,e):
+	if stopCriteria == "ABSOLUTE_ERROR" and absError<e:
 		return pn
-	elif stopCriteria =="RELATIVE_ERROR" and checkRelativeError(pn,pn_1,e):
+	elif stopCriteria =="RELATIVE_ERROR" and relError<e:
 		return pn
-	elif stopCriteria == "DISTANCE_ERROR" and (fpn<e):
+	elif stopCriteria == "DISTANCE_ERROR" and abs(fpn)<e:
 		return pn
 
 	if (fpn<0 and fa<0 ) or (fpn>0 and fa>0):
@@ -82,11 +96,16 @@ def main(args):
 	if checkArgs(args) == False:
 		print("Please check arguments")
 
-	"""print(fx_test1(1))"""
+	# 5E-6 -> 5*10^6
 
-	bisection(1,fx_test1,1,2,args[3],args[2],0)
+	res = bisection(1,fx_6_b,args[0],args[1],args[3],args[2],0)
 
+	if res == None:
+		print("There is no Approximate root")
+	else:
+		print("Approximate root:",format(res,"0.8f"))
 
+	#print(math.sin(90*math.pi/180))
 
 
 if __name__=="__main__":
