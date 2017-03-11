@@ -1,5 +1,4 @@
 # HW1 _ 131044009
-
 import sys,math
 
 def fx_test1(x):
