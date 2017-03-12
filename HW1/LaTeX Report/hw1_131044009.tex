@@ -18,7 +18,7 @@
        \includegraphics[width=400px]{ss_2_2_6_a.png}
        \caption{a}
 \end{figure}
-
+There is no valid root between 0 and 1. If we draw pilot, we will see root between 1-2.
 \begin{figure}[h]
        \includegraphics[width=400px]{ss_2_2_6_b.png}
        \caption{b}
@@ -29,7 +29,7 @@
 \end{figure}
 \begin{figure}[h]
        \includegraphics[width=400px,height=200px]{ss_2_2_6_c_2.png}
-       \caption{cc}
+       \caption{c2}
 \end{figure}
 \newpage
 \begin{figure}[h]
@@ -83,8 +83,17 @@ step(i) & $p_(i-1)$ & $p_i$ & $|p_0-p_i|$\\
 \end{tabular}
 Result: $p_6= 1.9433169$\\
 
-Theorically number of iteration:
-
+\textbf{Theoretically number of iteration:}
+\begin{align}
+\label{k}|p-p_n| & \leq\frac{k^n}{1-k}*|p_1-p_0|\\
+\label{}g'(x) \approx k & = ((3*x^2+3)^ \frac{1}{4})'\\
+\label{}g'(x) \approx k & = (1.5*x*(3*x^2+3))^ \frac{-3}{4}\\
+\label{}g'(1) \approx k & = 0.391\\
+\label{}|p-p_n| & \leq\frac{(0.391)^n}{1-0.391}*|1.5650846-1|\\
+\label{}& \leq\frac{(0.391)^n}{0.609}*|0.5650846|\\
+\label{} (0.391)^n*0,92788 & < 10^{-2} \\
+\label{} n& \approx 6
+\end{align}
 \section{Q3: Section 2.3 exercise 4}
 Let $f(x)=-x^3-cos(x)$. With $p_0 =-1$ and $p_1 = 0$, find $p_3$.\\
 a. Use the Secant method. b. Use the method of False Position.
