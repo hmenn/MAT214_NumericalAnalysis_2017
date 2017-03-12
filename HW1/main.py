@@ -96,10 +96,12 @@ def main(args):
 
 	if checkArgs(args) == False:
 		print("Please check arguments")
+		print("a b stop_criteria epsilon")
+		return
 
 	print("Epsilon ϵ: ",args[3], "|| A:",args[0]," B:",args[1]," || Stopping Criteria: ",args[2])
 	# 5E-6 -> 5*10^6
-	res = bisection(1,fx_6_d,args[0],args[1],args[3],args[2],0)
+	res = bisection(1,fx_6_a,args[0],args[1],args[3],args[2],0)
 
 	if res == None:
 		print("There is no Approximate root")
