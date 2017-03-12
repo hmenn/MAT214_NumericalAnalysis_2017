@@ -25,5 +25,5 @@ if __name__== "__main__":
 	print("Section 2.2 Question5")
 	fixedPoint(g_2_2_5,1,50,0.01)
 
-	print("Section 2.2 Question6")
-	fixedPoint(g_2_2_6, 1, 50, 0.01)
+	#print("Section 2.2 Question6")
+	#fixedPoint(g_2_2_6, 1, 50, 0.01)

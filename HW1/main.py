@@ -16,6 +16,9 @@ def fx_6_c(x):
 def fx_6_d(x):
 	return x+1-2*math.sin(math.pi*x);
 
+def fx_a(x):
+	return pow(x,2)-4*x+4-math.log(x)
+
 def checkArgs(args):
 	try:
 		if len(args) != 4:
@@ -70,42 +73,40 @@ def bisection(step,func,a,b,e,stopCriteria,pn_1):
 	pn = (a+b)/2.0
 	fpn = func(pn)
 
-	#print("pn:",format(pn,"0.7f"),"f(pn):",format(fpn,"0.7f"),sep=" ",end=" ")
-
 	absError = calcAbsErr(pn,pn_1)
 	relError = calcRelErr(pn,pn_1)
 
-	print("Absolute Error:",format(absError,"0.7f"),"Relative Error:",format(relError,"0.7f"),"E:",e,end="\n")
+	print("| Absolute Error:",format(absError,"0.7f")," | Relative Error:",format(relError,"0.7f"),end=" ")
+	print(" | pn:", format(pn, "0.7f"), " | f(pn):", format(fpn, "0.7f"), sep=" ")
 
-
-	if stopCriteria == "ABSOLUTE_ERROR" and absError<e:
-		return pn
-	elif stopCriteria =="RELATIVE_ERROR" and relError<e:
-		return pn
-	elif stopCriteria == "DISTANCE_ERROR" and abs(fpn)<e:
+	if (stopCriteria == "ABSOLUTE_ERROR" and absError<e) or	\
+		(stopCriteria =="RELATIVE_ERROR" and relError<e) or \
+		(stopCriteria == "DISTANCE_ERROR" and abs(fpn)<e):
+		print("\nStep:",step,end=" ")
 		return pn
 
 	if (fpn<0 and fa<0 ) or (fpn>0 and fa>0):
 		return bisection(step+1,func,pn,b,e,stopCriteria,pn)
 	else: return bisection(step+1,func,a,pn,e,stopCriteria,pn)
 
+def getTheoricIterNumber(a,b,e):
+	return math.fabs(math.log10(e/(b-a))/math.log10(2))
 
 def main(args):
 
 	if checkArgs(args) == False:
 		print("Please check arguments")
 
+	print("Epsilon ϵ: ",args[3], "|| A:",args[0]," B:",args[1]," || Stopping Criteria: ",args[2])
 	# 5E-6 -> 5*10^6
-
-	res = bisection(1,fx_6_b,args[0],args[1],args[3],args[2],0)
+	res = bisection(1,fx_6_d,args[0],args[1],args[3],args[2],0)
 
 	if res == None:
 		print("There is no Approximate root")
 	else:
 		print("Approximate root:",format(res,"0.8f"))
-
-	#print(math.sin(90*math.pi/180))
-
+		theoric = getTheoricIterNumber(args[0],args[1],args[3])
+		print("Theoretically required number of iterations:",format(theoric,"0.8f"))
 
 if __name__=="__main__":
 	main(sys.argv[1:])

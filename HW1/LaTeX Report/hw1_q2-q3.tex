@@ -3,12 +3,14 @@
 \usepackage{amsmath}
 
 \title{Numerical Analysis HomeWork 1}
-\author{Hasan MEN}
+\author{131044009 - Hasan MEN}
 \date{11 March 2017}
 
 \begin{document}
 
 \maketitle
+
+
 
 \section{Introduction to Fixed Point Iteration}
 If g is defined on [a, b] and g(p) = p for some p $\in$ [a, b], then the function g is said to have the fixed point p in [a, b].
@@ -37,35 +39,8 @@ step & $p_0$ & p & $|p_0-p|$\\
 5 & 1.9228478 & 1.9375075 & 0.0146597\\
 6 & 1.9375075 & 1.9433169 & 0.0058094\\
 \end{tabular}
-
-Result: $p_6= 1.9433169$
-
-\section{Section 2.2 Question 6}
-Use a fixed-point iteration method to determine a solution accurate to within $10^{-2}$ for $x^3-x-1 = 0$ on $[1, 2]$. Use $p_0 = 1$.
-\subsection{Answer}
-\begin{align}
-\label{2.2.6.1}
-x^3 -x-1 & = 0\\
-\label{2.2.6.2}
-x^3 & = x+1\\
-\label{2.2.6.3}
-x & = (x+1)^ \frac{1}{3}
-\end{align}
-
-Results for \ref{2.2.6.3}.function with $10^-2$ tolerance\\
-\begin{tabular}{r|cc|l}
-step & $p_0$ & p & $|p_0-p|$\\
-\hline
-1 & 1.0000000 & 1.2599210 & 0.2599210\\
-2 & 1.2599210 & 1.3122938 & 0.0523728\\
-3 & 1.3122938 & 1.3223538 & 0.0100600\\
-4 & 1.3223538 & 1.3242687 & 0.0019149\\
-\end{tabular}
-
-Result: $p_4= 1.3242687$
-
-
-
+Result: $p_6= 1.9433169$\\
+**Theorically number of iteration:???
 
 \end{document}
 
