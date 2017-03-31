@@ -19,9 +19,9 @@ void swapRows(matrix_t* matrix,int r1,int r2);
 void reducePivots(matrix_t* matrix,int i);
 double* getXVals(const matrix_t* matrix);
 
-
 int main(int argc,char *argv[]){
   matrix_t *matrix=NULL;
+  int i=0;
 
   if(argc != 5){
     printUsage(argv[0]);
@@ -35,6 +35,14 @@ int main(int argc,char *argv[]){
   printMatrix(matrix);
   solveGESP(matrix);
   double *results = getXVals(matrix);
+  int size = matrix->column-1;
+
+  for(i=0;i<size;++i)
+    printf("X[%d]:%9.4f | ",i+1,results[i]);
+  printf("\n");
+
+
+
   //freeMatrix(matrix);
 
   return 0;
@@ -50,11 +58,23 @@ void freeMatrix(matrix_t* matrix){
 double* getXVals(const matrix_t* matrix){
   int column = matrix->column;
   int row = matrix->row;
-  double * array = malloc(sizeof(double)*column);
+  double * array = malloc(sizeof(double)*(column-1));
 
-  printf("%f - %f \n", matrix->array[row-1][column-1],matrix->array[row-1][column-2]);
-  array[column -1 ] = matrix->array[row-1][column-1]/matrix->array[row-1][column-2];
-  printf("X[%d]:%f\n",column-1,array[column-1]);
+  //printf("%f - %f \n", matrix->array[row-1][column-1],matrix->array[row-1][column-2]);
+  array[column -2] = matrix->array[row-1][column-1]/matrix->array[row-1][column-2];
+
+
+  for(int i=row-2;i>=0;--i){
+    double sum=0;
+    for(int j=column-2;j>i;--j){
+      //printf("%d,%d,%f,%f\n",i,j,matrix->array[i][j],array[j] );
+      sum+= matrix->array[i][j]*array[j];
+
+    }
+
+    array[i] = (matrix->array[i][column-1] - sum) / matrix->array[i][i];
+  }
+
 
   return array;
 }
@@ -166,6 +186,7 @@ matrix_t* readMatrix(const char *filename){
   while(fscanf(fp,"%lf%c",&junk1,&junk2) && junk2!='\n'){
     ++column;
   }
+  printf("%d\n",column );
   rewind(fp);
 
   matrix = (matrix_t*)malloc(sizeof(matrix_t));
