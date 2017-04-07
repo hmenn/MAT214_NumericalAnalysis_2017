@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <math.h>
 
 typedef struct{
@@ -11,13 +12,27 @@ void printUsage(const char *execname){
   fprintf(stderr, "Usage: ./%s -i {filename} -m {GESP | JCB}",execname);
 }
 
+/* Read matrix from file and return an Matrix struct*/
 matrix_t* readMatrix(const char *filename);
+
+/* Print Matrint to standart output*/
 void printMatrix(const matrix_t* matrix);
-void solveGESP(matrix_t* matrix);
+
+/* Free matrix */
 void freeMatrix(matrix_t* matrix);
+
+/* Solve matrix with Gauss Elimination with Scaled Partial Pivot */
+void solveGESP(matrix_t* matrix);
+
 void swapRows(matrix_t* matrix,int r1,int r2);
+
 void reducePivots(matrix_t* matrix,int i);
+
+/* find X values with using backward substitution*/
 double* getXVals(const matrix_t* matrix);
+
+/* Solve Matrix with Jacobi*/
+void solveJCB(matrix_t* matrix);
 
 int main(int argc,char *argv[]){
   matrix_t *matrix=NULL;
@@ -33,19 +48,60 @@ int main(int argc,char *argv[]){
   }
 
   printMatrix(matrix);
-  solveGESP(matrix);
-  double *results = getXVals(matrix);
-  int size = matrix->column-1;
+  if(strcmp(argv[4],"GESP")==0){
+    solveGESP(matrix);
+    double *results = getXVals(matrix);
+    int size = matrix->column-1;
 
-  for(i=0;i<size;++i)
-    printf("X[%d]:%9.4f | ",i+1,results[i]);
-  printf("\n");
+    for(i=0;i<size;++i)
+      printf("X[%d]:%9.4f | ",i+1,results[i]);
+    printf("\n");
+  }
 
-
+  else if(strcmp(argv[4],"JCB")==0)
+    solveJCB(matrix);
 
   //freeMatrix(matrix);
 
   return 0;
+}
+
+void solveJCB(matrix_t* matrix){
+  int found=0;
+  int i=0,j=0;
+  int stopState=0;
+
+  double *oldXVals = (double *)calloc(sizeof(double),matrix->row);
+  double *newXVals = (double *)calloc(sizeof(double),matrix->row);
+
+  while(stopState!=matrix->row){
+    for(i=0;i<matrix->row;++i)
+      printf("X[%d]:%f ",i,oldXVals[i]);
+    printf("\n");
+    stopState=0;
+    for(i=0;i<matrix->row;++i){
+      double res = 0;
+      double stopCriteria=0;
+
+      for(j=0;j<matrix->column-1;++j){
+        if(i!=j){
+          //printf("i%d-j:%d->%f*%f\n",i,j,oldXVals[j],matrix->array[i][j] );
+          res+= oldXVals[j]*matrix->array[i][j];
+        }
+      }
+      newXVals[i] =  (matrix->array[i][j]-res)/matrix->array[i][i];
+      stopCriteria = fabs(newXVals[i]-oldXVals[i])/fabs(newXVals[i]);
+      if(stopCriteria<0.001)
+        stopState++;
+      //printf("OldX:%f New:%f Stop:%f\n",oldXVals[i],newXVals[i],stopCriteria);
+    }
+    for(i=0;i<matrix->row;++i)
+      oldXVals[i]=newXVals[i];
+    ++stopState;
+    found=1;
+  }
+  free(oldXVals);
+  free(newXVals);
 }
 
 void freeMatrix(matrix_t* matrix){
@@ -63,19 +119,14 @@ double* getXVals(const matrix_t* matrix){
   //printf("%f - %f \n", matrix->array[row-1][column-1],matrix->array[row-1][column-2]);
   array[column -2] = matrix->array[row-1][column-1]/matrix->array[row-1][column-2];
 
-
   for(int i=row-2;i>=0;--i){
     double sum=0;
     for(int j=column-2;j>i;--j){
       //printf("%d,%d,%f,%f\n",i,j,matrix->array[i][j],array[j] );
       sum+= matrix->array[i][j]*array[j];
-
     }
-
     array[i] = (matrix->array[i][column-1] - sum) / matrix->array[i][i];
   }
-
-
   return array;
 }
 
@@ -96,7 +147,6 @@ void solveGESP(matrix_t* matrix){
   double *s  = (double *)malloc(sizeof(double)*(column-1));
 
   printf("Row: %d, Column:%d\n",row,column);
-
   /* finding scaled partial pivots */
   for(i=0;i<row;++i){
     s[i] = fabs(matrix->array[i][0]);
@@ -151,7 +201,6 @@ void reducePivots(matrix_t* matrix,int index){
 }
 
 void printMatrix(const matrix_t* matrix){
-
   int i,j;
   int row,column;
 
@@ -183,7 +232,7 @@ matrix_t* readMatrix(const char *filename){
     return NULL;
   }
 
-  while(fscanf(fp,"%lf%c",&junk1,&junk2) && junk2!='\n'){
+  while(fscanf(fp,"%lf%c",&junk1,&junk2)!=EOF && junk2!='\n'){
     ++column;
   }
   printf("%d\n",column );
