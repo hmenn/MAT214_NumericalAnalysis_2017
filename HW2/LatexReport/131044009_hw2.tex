@@ -43,7 +43,7 @@ A&b
 \]
 Find Max values for each lines: 
 \begin{equation}
-\label{findSMax}S_{i}=max_{i=1}^n\|a_{ij}\|
+\label{findSMax1}S_{i}=max_{i=1}^n\|a_{ij}\|
 \end{equation}
 \begin{align}
 	S_{1}=max\{\|2\|,\|-3\|,\|2\|\}=3\\
@@ -83,7 +83,6 @@ A&b
 \end{array}
 \right]
 \]
-
 Now, find scaled partial pivots of second column to check if need interchanges
 \begin{align}
 	\frac{\|a_{22}\|}{S_{2}}=0.666667\\
@@ -163,7 +162,7 @@ A&b
 \]
 Find Max values for each lines: 
 \begin{equation}
-\label{findSMax}S_{i}=max_{i=1}^n\|a_{ij}\|
+\label{findSMax2}S_{i}=max_{i=1}^n\|a_{ij}\|
 \end{equation}
 \begin{align}
 	S_{1}=max\{\|3\|,\|-1\|,\|1\|\}=3\\
@@ -203,7 +202,6 @@ A&b
 \end{array}
 \right]
 \]
-
 Now, find scaled partial pivots of second column to check if need interchanges
 \begin{align}
 	\frac{\|a_{22}\|}{S_{2}}=1.166667\\
@@ -241,7 +239,7 @@ X
 \end{bmatrix}
 =
 \begin{bmatrix}
-	0..351&-0.2368&0.6579
+	0.0351&-0.2368&0.6579
 \end{bmatrix}^t
 \]
 
@@ -268,7 +266,7 @@ A&b
 \]
 Find Max values for each lines: 
 \begin{equation}
-\label{findSMax}S_{i}=max_{i=1}^n\|a_{ij}\|
+\label{findSMax3}S_{i}=max_{i=1}^n\|a_{ij}\|
 \end{equation}
 \begin{align}
 	S_{1}=max\{\|10\|,\|-1\|,\|0\|\}=10\\
@@ -308,7 +306,6 @@ A&b
 \end{array}
 \right]
 \]
-
 Now, find scaled partial pivots of second column to check if need interchanges
 \begin{align}
 	\frac{\|a_{22}\|}{S_{2}}=0.990000\\
@@ -349,6 +346,234 @@ X
 	0.9958&0.9579&0.7916
 \end{bmatrix}^t
 \]
+
+\subsection{Use Jacobi's Method}
+\section{Image Registration (50 Points)}
+\[
+A=
+\begin{bmatrix}
+	a_{11}&a_{12}&a_{13}\\
+	a_{21}&a_{22}&a_{23}\\
+	0&0&1
+\end{bmatrix}
+\]
+B(x,y)={[1,2],[2,1],[3,1]}\\
+F(x',y')={[2,2],[-1,4],[-4,4]}\\
+
+\[
+A*B=F : 
+\begin{bmatrix}
+	a_{11}&a_{12}&a_{13}\\
+	a_{21}&a_{22}&a_{23}\\
+	0&0&1
+\end{bmatrix}
+\begin{bmatrix}
+	x\\y\\1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	x'\\y'\\1
+\end{bmatrix}
+\]
+
+\[
+A*B^1=F^1 : 
+\begin{bmatrix}
+	a_{11}&a_{12}&a_{13}\\
+	a_{21}&a_{22}&a_{23}\\
+	0&0&1
+\end{bmatrix}
+\begin{bmatrix}
+	1\\2\\1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	2\\2\\1
+\end{bmatrix}
+\]
+Multiply matrix A and $B^1$
+\begin{align}
+\label{a*b1x}a_{11}+2a_{12}+a_{13}&=2\\
+\label{a*b1y}a_{21}+2a_{22}+a_{23}&=2
+\end{align}
+\[
+A*B^2=F^2 : 
+\begin{bmatrix}
+	a_{11}&a_{12}&a_{13}\\
+	a_{21}&a_{22}&a_{23}\\
+	0&0&1
+\end{bmatrix}
+\begin{bmatrix}
+	2\\1\\1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	-1\\4\\1
+\end{bmatrix}
+\]
+Multiply matrix A and $B^2$
+\begin{align}
+\label{a*b2x}2a_{11}+a_{12}+a_{13}&=-1\\
+\label{a*b2y}2a_{21}+a_{22}+a_{23}&=4
+\end{align}
+\[
+A*B^3=F^3 : 
+\begin{bmatrix}
+	a_{11}&a_{12}&a_{13}\\
+	a_{21}&a_{22}&a_{23}\\
+	0&0&1
+\end{bmatrix}
+\begin{bmatrix}
+	3\\1\\1
+\end{bmatrix}
+=
+\begin{bmatrix}
+	-4\\4\\1
+\end{bmatrix}
+\]
+Multiply matrix A and $B^3$
+\begin{align}
+\label{a*b3x}3a_{11}+a_{12}+a_{13}&=-4\\
+\label{a*b3y}3a_{21}+a_{22}+a_{23}&=4
+\end{align}
+\\
+\textbf{Combine equation \ref{a*b1x}, \ref{a*b2x} and \ref{a*b3x} to find $a_{11}$, $a_{12}$ and $a_{13}$ unknowns}
+\[
+\left[
+\begin{array}{c|c}
+H&h
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc|c}
+	1&2&1&2\\
+	2&1&1&-1\\
+	3&1&1&-4 
+\end{array}
+\right]
+\]
+\textbf{Combine equation \ref{a*b1y}, \ref{a*b2y} and \ref{a*b3y} to find $a_{21}$, $a_{22}$ and $a_{23}$ unknowns}
+\[
+\left[
+\begin{array}{c|c}
+G&g
+\end{array}
+\right]
+=
+\left[
+\begin{array}{ccc|c}
+	1&2&1&2\\
+	2&1&1&4\\
+	3&1&1&4
+\end{array}
+\right]
+\]
+\textbf{Step 0}. Let's apply gauss elimination to find unknowns for $H$.\\
+\textbf{Step 1}. Find $m_{21}$ and $m_{31}$ to eliminate 1st column.\\
+\begin{align}
+	m_{21}=\frac{H_{21}}{H_{11}}=\frac{2}{1}=2\\
+	m_{31}=\frac{H_{31}}{H_{11}}=\frac{3}{1}=3\\
+	H_2-m_{21}*H_1 -> H_2\\
+	H_3-m_{31}*H_1 -> H_3
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+H&h
+\end{array}
+\right]^1
+=
+\left[
+\begin{array}{ccc|c}
+	1&2&1&2\\
+	0&-3&-1&-5\\
+	0&-5&-2&-10 
+\end{array}
+\right]
+\]
+\textbf{Step 2}: Pivot=2, eliminate 2nd column
+\begin{align}
+	m_{32}=\frac{H_{32}}{H_{22}}=\frac{-5}{-3}=1.6667\\
+	H_3-m_{32}*H_2 -> H_3\\
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+H&h
+\end{array}
+\right]^2
+=
+\left[
+\begin{array}{ccc|c}
+	1&2&1&2\\
+	0&-3&-1&-5\\
+	0&0&-0.333&-1.665
+\end{array}
+\right]
+\]
+\textbf{Step 3}: Solve $H^2$ with backward substitution.
+\begin{align}
+	h_1=a_{11}&=-3\\h_2=a_{12}&=0\\h_3=a_{13}&=5
+\end{align}
+\textbf{Step 4}. Let's apply gauss elimination to find unknowns for $G$.\\
+\textbf{Step 5}. Find $m_{21}$ and $m_{31}$ to eliminate 1st column.\\
+\begin{align}
+	m_{21}=\frac{G_{21}}{G_{11}}=\frac{2}{1}=2\\
+	m_{31}=\frac{G_{31}}{G_{11}}=\frac{3}{1}=3\\
+	G_2-m_{21}*G_1 -> G_2\\
+	G_3-m_{31}*G_1 -> G_3
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+G&g
+\end{array}
+\right]^1
+=
+\left[
+\begin{array}{ccc|c}
+	1&2&1&2\\
+	0&-3&-1&0\\
+	0&-5&-2&-2 
+\end{array}
+\right]
+\]
+\textbf{Step 6}: Pivot=2, eliminate 2nd column
+\begin{align}
+	m_{32}=\frac{G_{32}}{G_{22}}=\frac{-5}{-3}=1.6667\\
+	G_3-m_{32}*G_2 -> G_3\\
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+G&g
+\end{array}
+\right]^2
+=
+\left[
+\begin{array}{ccc|c}
+	1&2&1&2\\
+	0&-3&-1&0\\
+	0&0&-0.333&-2
+\end{array}
+\right]
+\]
+\textbf{Step 7}: Solve $G^2$ with backward substitution.
+\begin{align}
+	g_1=a_{21}&=0\\g_2=a_{22}&=-2\\g_3=a_{23}&=6
+\end{align}
+A matrix is:
+\[
+A
+=
+\begin{bmatrix}
+	-3&0&5\\
+	6&-2&6\\
+	0&0&1
+\end{bmatrix}
+\]
+Lastly, we need to find \textbf{inverse of matrix A($A^{-1}$) to transform F to B}.
 
 
 \end{document}

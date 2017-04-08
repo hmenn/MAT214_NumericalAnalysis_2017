@@ -36,14 +36,19 @@ void solveJCB(matrix_t* matrix);
 
 int main(int argc,char *argv[]){
   matrix_t *matrix=NULL;
+
   int i=0;
 
-  if(argc != 5){
+  if(argc != 5 || strcmp(argv[1],"-i")!=0 || strcmp(argv[3],"-m")!=0 ||
+      (strcmp(argv[4],"GESP")!=0 && strcmp(argv[4],"JCB"))!=0 ){
+    fprintf(stderr, "Invalid parameter\n");
     printUsage(argv[0]);
     return 1;
   }
 
+
   if((matrix=readMatrix(argv[2])) ==NULL){
+    fprintf(stderr, "Matrix read error\n");
     return 1;
   }
 
@@ -56,13 +61,11 @@ int main(int argc,char *argv[]){
     for(i=0;i<size;++i)
       printf("X[%d]:%9.4f | ",i+1,results[i]);
     printf("\n");
+  }else if(strcmp(argv[4],"JCB")==0){
+    solveJCB(matrix);
   }
 
-  else if(strcmp(argv[4],"JCB")==0)
-    solveJCB(matrix);
-
   //freeMatrix(matrix);
-
   return 0;
 }
 
@@ -70,13 +73,16 @@ void solveJCB(matrix_t* matrix){
   int found=0;
   int i=0,j=0;
   int stopState=0;
+  int step=0;
 
   double *oldXVals = (double *)calloc(sizeof(double),matrix->row);
   double *newXVals = (double *)calloc(sizeof(double),matrix->row);
 
+  printf("Iterations:\n" );
   while(stopState!=matrix->row){
+    printf("Step:%d - ",step++ );
     for(i=0;i<matrix->row;++i)
-      printf("X[%d]:%f ",i,oldXVals[i]);
+      printf("X[%d]:%10f ",i,oldXVals[i]);
     printf("\n");
     stopState=0;
     for(i=0;i<matrix->row;++i){
@@ -91,14 +97,15 @@ void solveJCB(matrix_t* matrix){
       }
       newXVals[i] =  (matrix->array[i][j]-res)/matrix->array[i][i];
       stopCriteria = fabs(newXVals[i]-oldXVals[i])/fabs(newXVals[i]);
+
       if(stopCriteria<0.001)
         stopState++;
       //printf("OldX:%f New:%f Stop:%f\n",oldXVals[i],newXVals[i],stopCriteria);
     }
     for(i=0;i<matrix->row;++i)
       oldXVals[i]=newXVals[i];
-    ++stopState;
-    found=1;
+    if(step==50)
+        break;
   }
   free(oldXVals);
   free(newXVals);
@@ -240,7 +247,6 @@ matrix_t* readMatrix(const char *filename){
   matrix->array = (double **)malloc(sizeof(double *)*(column-1));
   for(i=0;i<column;++i)
     matrix->array[i] = (double*)malloc(sizeof(double)*column);
-
 
   for(i=0;i<column-1;++i)
     for(j=0;j<column;++j)
