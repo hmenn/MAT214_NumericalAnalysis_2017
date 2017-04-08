@@ -164,19 +164,17 @@ void solveGESP(matrix_t* matrix){
     for(j=i;j<column;++j){
       int maxPivotIndex = i;
       double maxPivot = fabs(matrix->array[i][j]) / s[i];
-      //printf("MaxPivot:%f - ",maxPivot);
-
-      for(k=i+1;k<row;++k){
-        double second = fabs(matrix->array[k][j]) / s[k];
-        //printf("Second:%f\n",second );
-        if(second>maxPivot){
-          maxPivot=second;
-          maxPivotIndex=k;
-        }
-      }
 
       if(j==i){
-        printf("Max Pivot Index: %d, Pivot:%f\n",maxPivotIndex+1,maxPivot);
+        for(k=i;k<row;++k){
+          double second = fabs(matrix->array[k][j]) / s[k];
+          printf("Pivot[%d,%d]:%f - ",k+1,j+1,second);
+          if(second>maxPivot){
+            maxPivot=second;
+            maxPivotIndex=k;
+          }
+        }
+        printf("\nMax Pivot Index: %d, Pivot:%f\n",maxPivotIndex+1,maxPivot);
         printf("Change Row:%d with Row:%d\n",i+1,maxPivotIndex+1);
         swapRows(matrix,i,maxPivotIndex);
         reducePivots(matrix,i); // i nin alt sutununu sıfırla
@@ -192,7 +190,7 @@ void reducePivots(matrix_t* matrix,int index){
   int i,j;
   for(i=index+1;i<matrix->row;++i){
     double coef = matrix->array[i][index] / matrix->array[index][index];
-    printf("Coeff:%f\n",coef);
+    printf("m_%d_%d:%f\n",i+1,index+1,coef);
     for(j=0;j<matrix->column;++j){
       matrix->array[i][j] = matrix->array[i][j] - coef * matrix->array[index][j];
     }
