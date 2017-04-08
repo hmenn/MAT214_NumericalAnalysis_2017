@@ -65,8 +65,8 @@ Now calculate $m_{21}$ and $m_{31}$ to reduce rows
 \end{align}
 Apply this operations on matrix:
 \begin{align}
-	E_{2}-m_{21}*E_{1}->E_{2}\\
-	E_{3}-m_{31}*E_{1}->E_{3}
+	E_{2}-m_{21}*E_{1}\rightarrow E_{2}\\
+	E_{3}-m_{31}*E_{1}\rightarrow E_{3}
 \end{align}
 \[
 \left[
@@ -110,7 +110,7 @@ Now calculate $m_{32}$ to reduce row
 \end{align}
 Apply this operations on matrix:
 \begin{align}
-	E_{3}-m_{32}*E_{2}->E_{3}
+	E_{3}-m_{32}*E_{2}\rightarrow E_{3}
 \end{align}
 \[
 \left[
@@ -184,8 +184,8 @@ Now calculate $m_{21}$ and $m_{31}$ to reduce rows
 \end{align}
 Apply this operations on matrix:
 \begin{align}
-	E_{2}-m_{21}*E_{1}->E_{2}\\
-	E_{3}-m_{31}*E_{1}->E_{3}
+	E_{2}-m_{21}*E_{1}\rightarrow E_{2}\\
+	E_{3}-m_{31}*E_{1}\rightarrow E_{3}
 \end{align}
 \[
 \left[
@@ -214,7 +214,7 @@ Now calculate $m_{32}$ to reduce row
 \end{align}
 Apply this operations on matrix:
 \begin{align}
-	E_{3}-m_{32}*E_{2}->E_{3}
+	E_{3}-m_{32}*E_{2}\rightarrow E_{3}
 \end{align}
 \[
 \left[
@@ -288,8 +288,8 @@ Now calculate $m_{21}$ and $m_{31}$ to reduce rows
 \end{align}
 Apply this operations on matrix:
 \begin{align}
-	E_{2}-m_{21}*E_{1}->E_{2}\\
-	E_{3}-m_{31}*E_{1}->E_{3}
+	E_{2}-m_{21}*E_{1}\rightarrow E_{2}\\
+	E_{3}-m_{31}*E_{1}\rightarrow E_{3}
 \end{align}
 \[
 \left[
@@ -318,7 +318,7 @@ Now calculate $m_{32}$ to reduce row
 \end{align}
 Apply this operations on matrix:
 \begin{align}
-	E_{3}-m_{32}*E_{2}->E_{3}
+	E_{3}-m_{32}*E_{2}\rightarrow E_{3}
 \end{align}
 \[
 \left[
@@ -474,8 +474,8 @@ G&g
 \begin{align}
 	m_{21}=\frac{H_{21}}{H_{11}}=\frac{2}{1}=2\\
 	m_{31}=\frac{H_{31}}{H_{11}}=\frac{3}{1}=3\\
-	H_2-m_{21}*H_1 -> H_2\\
-	H_3-m_{31}*H_1 -> H_3
+	H_2-m_{21}*H_1 \rightarrow  H_2\\
+	H_3-m_{31}*H_1 \rightarrow  H_3
 \end{align}
 \[
 \left[
@@ -495,7 +495,7 @@ H&h
 \textbf{Step 2}: Pivot=2, eliminate 2nd column
 \begin{align}
 	m_{32}=\frac{H_{32}}{H_{22}}=\frac{-5}{-3}=1.6667\\
-	H_3-m_{32}*H_2 -> H_3\\
+	H_3-m_{32}*H_2 \rightarrow  H_3\\
 \end{align}
 \[
 \left[
@@ -521,8 +521,8 @@ H&h
 \begin{align}
 	m_{21}=\frac{G_{21}}{G_{11}}=\frac{2}{1}=2\\
 	m_{31}=\frac{G_{31}}{G_{11}}=\frac{3}{1}=3\\
-	G_2-m_{21}*G_1 -> G_2\\
-	G_3-m_{31}*G_1 -> G_3
+	G_2-m_{21}*G_1 \rightarrow  G_2\\
+	G_3-m_{31}*G_1 \rightarrow  G_3
 \end{align}
 \[
 \left[
@@ -542,7 +542,7 @@ G&g
 \textbf{Step 6}: Pivot=2, eliminate 2nd column
 \begin{align}
 	m_{32}=\frac{G_{32}}{G_{22}}=\frac{-5}{-3}=1.6667\\
-	G_3-m_{32}*G_2 -> G_3\\
+	G_3-m_{32}*G_2 \rightarrow  G_3\\
 \end{align}
 \[
 \left[
@@ -574,6 +574,89 @@ A
 \end{bmatrix}
 \]
 Lastly, we need to find \textbf{inverse of matrix A($A^{-1}$) to transform F to B}.
+\[
+\left[
+\begin{array}{c|c}
+A|I
+\end{array}
+\right]^1
+=
+\left[
+\begin{array}{ccc|ccc}
+   -3 & 0 & 5 & 1 & 0 & 0\\
+	6 & -2 & 6 & 0 & 1 & 0\\
+	0 & 0 & 1 & 0 & 0 & 1
+\end{array}
+\right]
+\]
+\begin{align}
+	A_{2}+2A_{1}\rightarrow A_{2}\\
+	A_{1}/-3\rightarrow A_{1}
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+A|I
+\end{array}
+\right]^2
+=
+\left[
+\begin{array}{ccc|ccc}
+    1 & 0 & -1.667 & -0.333 & 0 & 0\\
+	0 & -2 & 16 & 2 & 1 & 0\\
+	0 & 0 & 1 & 0 & 0 & 1
+\end{array}
+\right]
+\]
+\begin{align}
+	A_{2}/-2\rightarrow A_{2}\\
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+A|I
+\end{array}
+\right]^2
+=
+\left[
+\begin{array}{ccc|ccc}
+    1 & 0 & -1.667 & -0.333 & 0 & 0\\
+	0 & 1 & -8 & -1 & -0.5 & 0\\
+	0 & 0 & 1 & 0 & 0 & 1
+\end{array}
+\right]
+\]
+\begin{align}
+	A_{1}+1.667A_{3}\rightarrow A_{1}\\
+	A_{2}+8A_{3}\rightarrow A_{2}
+\end{align}
+\[
+\left[
+\begin{array}{c|c}
+A|I
+\end{array}
+\right]^2
+=
+\left[
+\begin{array}{ccc|ccc}
+    1 & 0 & 0 & -0.333 & 0 & 1.667\\
+	0 & 1 & 0 & -1 & -0.5 & 8\\
+	0 & 0 & 1 & 0 & 0 & 1
+\end{array}
+\right]
+\]
+\textbf{Inverse of A($A^{-1}$)}
+\[
+A^{-1}
+=
+\begin{bmatrix}
+	-0.333 & 0 & 1.667\\
+	-1 & -0.5 & 8\\
+	 0 & 0 & 1
+\end{bmatrix}
+\]
+
+
 
 
 \end{document}
