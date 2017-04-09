@@ -3,7 +3,7 @@ InputFile1 = m621c.txt
 InputFile2 = m731a.txt
 InputFile3 = m731b.txt
 
-all: clean compile run4
+all: clean compile
 
 compile:
 	gcc ${SourceFiles} -o solver -lm

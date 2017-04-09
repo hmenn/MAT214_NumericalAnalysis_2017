@@ -6,21 +6,18 @@
 
 \title{Numerical Analysis Homework 2}
 \author{131044009 - Hasan MEN}
-\date{7 March 2017}
+\date{8 March 2017}
 
 \begin{document}
 
 \maketitle
-
-\section{Apply Gaussian and Jaboci's method (50 points)}
-Program Usage: 
+\textbf{Program Usage:} 
 \begin{quote}
-	\$./solver -i system.txt -m {GESP/JCB}
+	\$./solver -i matrix.txt -m \{GESP or JCB\}
 \end{quote}
-
-
+\section{Apply Gaussian and Jaboci's method (50 points)}
 \subsection{Use Gaussian Elimination with Scaled Partial Pivoting}
-\subsubsection{Question 6.2-1c}
+\subsubsection{Question 6.2.1.c}
 \begin{align}
 \label{q6.2.1.c.1}2x_{1}-3x_{2}+2x_{3}&=5 \\
 \label{q6.2.1.c.2}-4x_{1}+2x_{2}-6x_{3}&=14 \\
@@ -139,7 +136,7 @@ X
 \end{bmatrix}^t
 \]
 
-\subsubsection{Question 7.3.1-a}
+\subsubsection{Question 7.3.1.a}
 \begin{align}
 \label{q7.3.1.a.1}3x_{1}-1x_{2}+1x_{3}&=1 \\
 \label{q7.3.1.a.2}3x_{1}+6x_{2}+2x_{3}&=0 \\
@@ -243,7 +240,7 @@ X
 \end{bmatrix}^t
 \]
 
-\subsubsection{Question 7.3.1-b}
+\subsubsection{Question 7.3.1.b}
 \begin{align}
 \label{q7.3.1.b.1}10x_{1}-x_{2}+0&=9 \\
 \label{q7.3.1.b.2}-x_{1}+10x_{2}-2x_{3}&=7 \\
@@ -346,8 +343,69 @@ X
 	0.9958&0.9579&0.7916
 \end{bmatrix}^t
 \]
-
+\newpage
 \subsection{Use Jacobi's Method}
+\begin{align}
+	x_{i}^{k+1}&=\frac{1}{a_{ii}}\Bigg(b_{i}-\sum_{j!=i}^n\bigg(a_{ij}x_{j}^k\bigg)\Bigg), i=1,2,3,...n
+\end{align}
+\subsubsection{Question 6.2.1.c}
+Iterations:
+\begin{tabular}{l|l|c|r}
+	Iter&$X_{1}$&$X_{2}$&$X_{3}$\\
+	\hline
+		 0&  0.0000&  0.0000&  0.0000\\
+		1&  2.5000&  7.0000&  2.0000\\
+		2& 11.0000& 18.0000& -2.7500\\
+		3& 32.2500& 20.7500&-12.5000\\
+		4& 46.1250& 34.0000&-24.5000\\
+		5& 78.0000& 25.7500&-38.0625\\
+		6& 79.1875& 48.8125&-49.8750\\
+		7&125.5938& 15.7500&-62.0000\\
+		8& 88.1250& 72.1875&-68.6719\\
+		9&179.4531&-22.7656&-78.1562\\
+		10& 46.5078&131.4375&-76.3438\\
+		11&276.0000&-129.0156&-86.9727\\
+		12&-104.0508&298.0820&-71.4922\\
+		13&521.1152&-415.5781&-95.0156\\
+		14&-525.8516&764.1836&-50.7686\\
+		15&1199.5439&-1197.0088&-117.1660\\
+		16&-1675.8472&2054.5898&  0.7324\\
+	\hline
+\end{tabular}\\\\
+\textbf{Couldn't find specific solution for this problem with Jacobi.\\Have to change stopping criterion which is 0.001.}
+\subsubsection{Question 7.3.1.a}
+Iterations:
+\begin{tabular}{l|l|c|r}
+	Iter&$X_{1}$&$X_{2}$&$X_{3}$\\
+	\hline
+0&  0.0000&  0.0000&  0.0000\\
+1&  0.3333&  0.0000&  0.5714\\
+2&  0.1429& -0.3571&  0.4286\\
+3&  0.0714& -0.2143&  0.6633\\
+4&  0.0408& -0.2568&  0.6327\\
+5&  0.0368& -0.2313&  0.6640\\
+6&  0.0349& -0.2398&  0.6548\\
+7&  0.0352& -0.2357&  0.6592\\
+8&  0.0350& -0.2373&  0.6574\\
+9&  0.0351& -0.2366&  0.6581\\
+10&  0.0351& -0.2369&  0.6578\\
+	\hline
+\end{tabular}$X_{1}^{10}=0.0351,X_{2}^{10}=-0.2369,X_{3}^{10}=0.6578$ \\\\
+\textbf{Found exact solution with stopping criteria=0.001}
+\subsubsection{Question 7.3.1.b}
+Iterations:
+\begin{tabular}{l|l|c|r}
+	Iter&$X_{1}$&$X_{2}$&$X_{3}$\\
+	\hline
+0&  0.0000&  0.0000&  0.0000\\
+1&  0.9000&  0.7000&  0.6000\\
+2&  0.9700&  0.9100&  0.7400\\
+3&  0.9910&  0.9450&  0.7820\\
+4&  0.9945&  0.9555&  0.7890\\
+5&  0.9956&  0.9572&  0.7911\\
+	\hline
+\end{tabular}$X_{1}^{5}=0.9956,X_{5}^{10}=0.9572,X_{5}^{10}=0.7911$ \\\\
+\textbf{Found exact solution with stopping criteria=0.001}
 \section{Image Registration (50 Points)}
 \[
 A=

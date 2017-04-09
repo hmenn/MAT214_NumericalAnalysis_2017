@@ -3,6 +3,14 @@
 #include <string.h>
 #include <math.h>
 
+#define ANSI_COLOR_RED     "\x1b[31m"
+#define ANSI_COLOR_GREEN   "\x1b[32m"
+#define ANSI_COLOR_YELLOW  "\x1b[33m"
+#define ANSI_COLOR_BLUE    "\x1b[34m"
+#define ANSI_COLOR_MAGENTA "\x1b[35m"
+#define ANSI_COLOR_CYAN    "\x1b[36m"
+#define ANSI_COLOR_RESET   "\x1b[0m"
+
 typedef struct{
   double **array;
   int row,column;
@@ -24,7 +32,7 @@ void freeMatrix(matrix_t* matrix);
 /* Solve matrix with Gauss Elimination with Scaled Partial Pivot */
 void solveGESP(matrix_t* matrix);
 
-void swapRows(matrix_t* matrix,int r1,int r2);
+void swapRows(matrix_t* matrix,int r1,int r2,double *s);
 
 void reducePivots(matrix_t* matrix,int i);
 
@@ -58,9 +66,10 @@ int main(int argc,char *argv[]){
     double *results = getXVals(matrix);
     int size = matrix->column-1;
 
+    printf(ANSI_COLOR_GREEN "Results:");
     for(i=0;i<size;++i)
       printf("X[%d]:%9.4f | ",i+1,results[i]);
-    printf("\n");
+    printf("\n" ANSI_COLOR_RESET);
   }else if(strcmp(argv[4],"JCB")==0){
     solveJCB(matrix);
   }
@@ -78,12 +87,14 @@ void solveJCB(matrix_t* matrix){
   double *oldXVals = (double *)calloc(sizeof(double),matrix->row);
   double *newXVals = (double *)calloc(sizeof(double),matrix->row);
 
-  printf("Iterations:\n" );
+  printf(ANSI_COLOR_GREEN "Iterations:\n" ANSI_COLOR_RESET);
   while(stopState!=matrix->row){
-    printf("Step:%d - ",step++ );
+    printf(ANSI_COLOR_RED"Step:%d - "ANSI_COLOR_RESET,step++ );
+    //printf("%d",step++ );
     for(i=0;i<matrix->row;++i)
+      //printf("&%8.4f",oldXVals[i] );
       printf("X[%d]:%10f ",i,oldXVals[i]);
-    printf("\n");
+    printf("\\\\\n");
     stopState=0;
     for(i=0;i<matrix->row;++i){
       double res = 0;
@@ -137,12 +148,17 @@ double* getXVals(const matrix_t* matrix){
   return array;
 }
 
-void swapRows(matrix_t* matrix,int r1,int r2){
+void swapRows(matrix_t* matrix,int r1,int r2,double *s){
+  double temp ;
   for(int i=0;i<matrix->column;++i){
-    double temp = matrix->array[r1][i];
+    temp = matrix->array[r1][i];
     matrix->array[r1][i]=matrix->array[r2][i];
     matrix->array[r2][i]=temp;
   }
+  // swap scaled pivots
+  temp=s[r1];
+  s[r1]=s[r2];
+  s[r2]=temp;
 }
 
 
@@ -164,8 +180,8 @@ void solveGESP(matrix_t* matrix){
   }
 
   for(i=0;i<column-1;++i)
-    printf("S[%d] = %f | ",i+1,s[i]);
-  printf("\n");
+    printf(ANSI_COLOR_CYAN "S[%d] = %f | ",i+1,s[i]);
+  printf("\n"ANSI_COLOR_RESET);
 
   for(i=0;i<row-1;++i){
     for(j=i;j<column;++j){
@@ -175,7 +191,7 @@ void solveGESP(matrix_t* matrix){
       if(j==i){
         for(k=i;k<row;++k){
           double second = fabs(matrix->array[k][j]) / s[k];
-          printf("Pivot[%d,%d]:%f - ",k+1,j+1,second);
+          printf(ANSI_COLOR_RED "Pivot[%d,%d]:%f - " ANSI_COLOR_RESET,k+1,j+1,second);
           if(second>maxPivot){
             maxPivot=second;
             maxPivotIndex=k;
@@ -183,7 +199,7 @@ void solveGESP(matrix_t* matrix){
         }
         printf("\nMax Pivot Index: %d, Pivot:%f\n",maxPivotIndex+1,maxPivot);
         printf("Change Row:%d with Row:%d\n",i+1,maxPivotIndex+1);
-        swapRows(matrix,i,maxPivotIndex);
+        swapRows(matrix,i,maxPivotIndex,s);
         reducePivots(matrix,i); // i nin alt sutununu sıfırla
         printMatrix(matrix);
       }
@@ -212,9 +228,9 @@ void printMatrix(const matrix_t* matrix){
   row = matrix->row;
   column = matrix->column;
 
-  printf("-------------------------------------------\n");
+  printf(ANSI_COLOR_BLUE "-------------------------------------------\n");
   printf("                  Matrix\n");
-  printf("-------------------------------------------\n");
+  printf("-------------------------------------------\n" ANSI_COLOR_RESET);
   for(i=0;i<row;++i){
     for(j=0;j<column;++j){
       printf("%08.3f ",matrix->array[i][j]);

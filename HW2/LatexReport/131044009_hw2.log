@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.3.11)  9 APR 2017 03:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.3.11)  9 APR 2017 13:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -557,32 +557,54 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-[1
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 16.
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2]
-Underfull \hbox (badness 10000) in paragraph at lines 359--362
+(/usr/share/texlive/texmf-dist/tex/latex/base/omscmr.fd
+File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 16.
+ [1
 
- []
-
-[3]
-Underfull \hbox (badness 10000) in paragraph at lines 471--474
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 518--521
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2] [3]
+Underfull \hbox (badness 10000) in paragraph at lines 352--376
 
  []
 
-[4] [5] (./131044009_hw2.aux) ) 
+
+Underfull \hbox (badness 10000) in paragraph at lines 377--395
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 396--409
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 417--420
+
+ []
+
+[4]
+Underfull \hbox (badness 10000) in paragraph at lines 529--532
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 576--579
+
+ []
+
+[5] [6] (./131044009_hw2.aux) ) 
 Here is how much of TeX's memory you used:
- 2884 strings out of 494953
- 37663 string characters out of 6180977
- 121788 words of memory out of 5000000
- 6137 multiletter control sequences out of 15000+600000
+ 2902 strings out of 494953
+ 37976 string characters out of 6180977
+ 120788 words of memory out of 5000000
+ 6152 multiletter control sequences out of 15000+600000
  9023 words of font info for 33 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 37i,9n,32p,239b,191s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,32p,239b,191s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmbx10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
@@ -594,10 +616,10 @@ xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/share/texlive/texmf-dis
 t/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/font
 s/type1/public/amsfonts/cm/cmsy7.pfb>
-Output written on 131044009_hw2.pdf (5 pages, 138234 bytes).
+Output written on 131044009_hw2.pdf (6 pages, 145314 bytes).
 PDF statistics:
- 64 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 67 PDF objects out of 1000 (max. 8388607)
+ 47 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
